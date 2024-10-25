@@ -3,6 +3,8 @@ async function sendMessage() {
     const userInput = document.getElementById('user-input').value;
     const chatBox = document.getElementById('chat-box');
 
+    if (userInput.trim() === "") return; // Prevent empty messages
+
     // Display user message
     chatBox.innerHTML += `<div>User: ${userInput}</div>`;
     
@@ -20,4 +22,33 @@ async function sendMessage() {
     // Display assistant's response
     chatBox.innerHTML += `<div>Assistant: ${data.response} (Sentiment: ${data.sentiment[0].label})</div>`;
     document.getElementById('user-input').value = ''; // Clear input field
+
+    // Scroll to the bottom of the chat box
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+// Function for quick responses
+function quickResponse(message) {
+    document.getElementById('user-input').value = message;
+    sendMessage();
+}
+
+// Daily mood check-in reminder
+function dailyMoodReminder() {
+    const now = new Date();
+    const reminderTime = new Date();
+    reminderTime.setHours(9, 0, 0); // Set reminder for 9 AM
+
+    if (now.getTime() > reminderTime.getTime()) {
+        reminderTime.setDate(reminderTime.getDate() + 1); // Move to next day if past time
+    }
+
+    const timeUntilReminder = reminderTime.getTime() - now.getTime();
+    setTimeout(() => {
+        alert("🌟 Time for your daily mood check-in! How are you feeling today?");
+        dailyMoodReminder(); // Reset the reminder for the next day
+    }, timeUntilReminder);
+}
+
+// Start the daily mood reminders
+dailyMoodReminder();

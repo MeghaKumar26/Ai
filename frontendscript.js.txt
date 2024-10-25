@@ -1,26 +1,16 @@
-// frontend/script.js
 async function sendMessage() {
     const userInput = document.getElementById('user-input').value;
     const chatBox = document.getElementById('chat-box');
-
+    
     if (userInput.trim() === "") return; // Prevent empty messages
 
-    // Display user message
-    chatBox.innerHTML += `<div>User: ${userInput}</div>`;
+    chatBox.innerHTML += `<div><strong>You:</strong> ${userInput}</div>`;
     
-    // Send user input to backend
-    const response = await fetch('http://localhost:5000/chat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: userInput })
-    });
-    
-    const data = await response.json();
-    
+    // Determine response based on user input
+    let response = generateResponse(userInput);
+
     // Display assistant's response
-    chatBox.innerHTML += `<div>Assistant: ${data.response} (Sentiment: ${data.sentiment[0].label})</div>`;
+    chatBox.innerHTML += `<div><strong>Serene AI:</strong> ${response}</div>`;
     document.getElementById('user-input').value = ''; // Clear input field
 
     // Scroll to the bottom of the chat box
@@ -33,20 +23,39 @@ function quickResponse(message) {
     sendMessage();
 }
 
+// Generates appropriate responses based on user input
+function generateResponse(input) {
+    const lowerCaseInput = input.toLowerCase();
+
+    if (lowerCaseInput.includes('happy')) {
+        return "That's great! How about celebrating with some fun activities like painting or going for a walk?";
+    } else if (lowerCaseInput.includes('sad')) {
+        return "I'm sorry you're feeling sad. Some yoga or breathing exercises might help. Want to try?";
+    } else if (lowerCaseInput.includes('anxious')) {
+        return "Take a deep breath. How about trying a quick breathing exercise? It can really help calm the mind.";
+    } else if (lowerCaseInput.includes('help')) {
+        return "I'm here for you. If you’re feeling extremely low, it may be a good idea to consult a professional. Here are some local options: [link].";
+    } else if (lowerCaseInput.includes('low')) {
+        return "It seems you're feeling down lately. Consider consulting a doctor for advice.";
+    } else {
+        return "Can you tell me more? I'm here to listen.";
+    }
+}
+
 // Daily mood check-in reminder
 function dailyMoodReminder() {
     const now = new Date();
     const reminderTime = new Date();
-    reminderTime.setHours(9, 0, 0); // Set reminder for 9 AM
+    reminderTime.setHours(9, 0, 0); // Reminder set for 9 AM
 
     if (now.getTime() > reminderTime.getTime()) {
-        reminderTime.setDate(reminderTime.getDate() + 1); // Move to next day if past time
+        reminderTime.setDate(reminderTime.getDate() + 1); // Schedule next reminder if time passed
     }
 
     const timeUntilReminder = reminderTime.getTime() - now.getTime();
     setTimeout(() => {
         alert("🌟 Time for your daily mood check-in! How are you feeling today?");
-        dailyMoodReminder(); // Reset the reminder for the next day
+        dailyMoodReminder(); // Set the reminder for the next day
     }, timeUntilReminder);
 }
 

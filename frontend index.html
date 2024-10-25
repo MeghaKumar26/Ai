@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mental Health Virtual Assistant</title>
+    <title>Serene AI - Your Mental Health Assistant</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="chat-container">
-        <h1>Mental Health Virtual Assistant</h1>
+        <h1>Serene AI</h1>
         <div id="chat-box"></div>
-        <input type="text" id="user-input" placeholder="Type your message here..." />
+        <input type="text" id="user-input" placeholder="How are you feeling today?" />
         <button onclick="sendMessage()">Send</button>
         <div id="quick-responses">
+            <button onclick="quickResponse('I feel happy')">I feel happy</button>
             <button onclick="quickResponse('I feel sad')">I feel sad</button>
             <button onclick="quickResponse('I feel anxious')">I feel anxious</button>
             <button onclick="quickResponse('I need help')">I need help</button>

@@ -1,0 +1,23 @@
+// frontend/script.js
+async function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    const chatBox = document.getElementById('chat-box');
+
+    // Display user message
+    chatBox.innerHTML += `<div>User: ${userInput}</div>`;
+    
+    // Send user input to backend
+    const response = await fetch('http://localhost:5000/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: userInput })
+    });
+    
+    const data = await response.json();
+    
+    // Display assistant's response
+    chatBox.innerHTML += `<div>Assistant: ${data.response} (Sentiment: ${data.sentiment[0].label})</div>`;
+    document.getElementById('user-input').value = ''; // Clear input field
+}

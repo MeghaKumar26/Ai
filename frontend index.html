@@ -10,8 +10,13 @@
     <div class="chat-container">
         <h1>Mental Health Virtual Assistant</h1>
         <div id="chat-box"></div>
-        <input type="text" id="user-input" placeholder="Type your message here...">
+        <input type="text" id="user-input" placeholder="Type your message here..." />
         <button onclick="sendMessage()">Send</button>
+        <div id="quick-responses">
+            <button onclick="quickResponse('I feel sad')">I feel sad</button>
+            <button onclick="quickResponse('I feel anxious')">I feel anxious</button>
+            <button onclick="quickResponse('I need help')">I need help</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
